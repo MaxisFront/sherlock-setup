@@ -8,7 +8,7 @@
 # Life script.
 #
 # GitHub: https://github.com/MaxisFront/sherlock-setup
-# Use: setup_case <MachineName> <URL> [password]
+# Use: sherlock-setup.sh <MachineName> <URL> [password]
 # ===============================================================================
 
 sherlock-setup() {
@@ -23,7 +23,7 @@ sherlock-setup() {
 
   if [[ -z  $1 || -z $2 ]]; then
      echo -e "\e[31m[!] URL or machine name not provided\e[0m"
-    echo -e "Use: setup_case <\e[33mmachineName\e[0m> <\e[34mhttps://example.com/filename\e[0m> [password]"
+    echo -e "Use: sherlock-setup.sh <\e[33mmachineName\e[0m> <\e[34mhttps://example.com/filename\e[0m> [password]"
 
     return 1
   fi
