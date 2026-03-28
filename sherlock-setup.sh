@@ -22,7 +22,7 @@ sherlock-setup() {
   done
 
   if [[ -z  $1 || -z $2 ]]; then
-     echo -e "\e[31m[!]URL or manchine's name doesn't added\e[0m"
+     echo -e "\e[31m[!] URL or machine name not provided\e[0m"
     echo -e "Use: setup_case <\e[33mmachineName\e[0m> <\e[34mhttps://example.com/filename\e[0m> [password]"
 
     return 1
@@ -47,8 +47,14 @@ sherlock-setup() {
       sha256sum "$filepath" > "$name/artifacts/checksum.txt"
 
       mv "$filepath" "$name/artifacts/checksum.txt" "$name/src/"
+      
+      # If the script is a function, the CD command is executed
+      if [[ "${BASH_SOURCE[0]}" != "${0}" ]]; then
+        cd "$name" || return 1
+      else 
+        echo -e "\e[32m[+] Enviroment set up at $(pwd)/$name\e[0m"
+      fi
 
-      cd "$name" || return 1
     else
       echo -e "\e[31m[!] Verify the password or the $filename integrity\e[0m"
       return 1
@@ -59,3 +65,8 @@ sherlock-setup() {
     return 1
   fi
 }
+
+# Verify for a standalone execution
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+  sherlock-setup "$@"
+fi
