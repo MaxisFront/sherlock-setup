@@ -13,21 +13,19 @@
 
 sherlock-setup() {
 
-  # Verificar existencia de dependencias
+  # Verify dependencies
   for cmd in 7z wget sha256sum; do 
-    # Verificar si existe el comando "7z"
-    if ! command -v "$cmd" &>/dev/null; then # Enviar cualquier mensaje a /dev/null
-      echo -e "\e[31m[!] El comando $cmd no existe. Por favor, instálelo\e[0m"
+    if ! command -v "$cmd" &>/dev/null; then
+      echo -e "\e[31m[!] The command $cmd doesn't exist"
       return 1
     fi
   done
 
-  # Verificar si el usuario insertó la URL
-  if [[ -z  $1 || -z $2 ]]; then # Verifica si $1 está vacío (-z)
-    echo -e "\e[31m[!] No se integró una URL o el nombre de la máquina\e[0m"
-    echo -e "Uso: setup_case <\e[33mmachineName\e[0m> <\e[34mhttps://example.com/filename\e[0m> [password]"
+  if [[ -z  $1 || -z $2 ]]; then
+     echo -e "\e[31m[!]URL or manchine's name doesn't added\e[0m"
+    echo -e "Use: setup_case <\e[33mmachineName\e[0m> <\e[34mhttps://example.com/filename\e[0m> [password]"
 
-    return 1 # Finaliza la ejecución con un valor de error
+    return 1
   fi
 
   # Variables
@@ -37,28 +35,27 @@ sherlock-setup() {
   local filename="${name}.zip"
   local filepath="$name/artifacts/$filename"
 
-  # Creación de carpetas
   mkdir -p "$name"/{artifacts,exports,logs,src}
 
-  # Descarga del archivo .zip
+  # Download .zip file
   if wget -q --show-progress -O "$filepath" "$url" ; then
 
-  # Descomprimir .zip (-bso0 para no mostrar información alguna en la terminal)
-    if 7z x -bso0 -y -p"$password" "$filepath" -o"$name/artifacts/"; then # "-y" si el usuario descarga nuevamente el .zip
-
-      echo -e "\e[32m[+] El archivo ${filename} ha sido descargado y extraído satisfactoriamente\e[0m"
+    # Decompress the .zip file (No output from the '7z' command)
+    if 7z x -bso0 -y -p"$password" "$filepath" -o"$name/artifacts/"; then
+      
+      echo -e "\e[32m[+]${filename} downloaded and extracted successfully\e[0m"
       sha256sum "$filepath" > "$name/artifacts/checksum.txt"
 
       mv "$filepath" "$name/artifacts/checksum.txt" "$name/src/"
 
       cd "$name" || return 1
-    else # Si el archivo .zip no existe...
-      echo -e "\e[31m[!] Verificar la contraseña o integridad del archivo $filename\e[0m" 
+    else
+      echo -e "\e[31m[!] Verify the password or the $filename integrity\e[0m"
       return 1
     fi
     
-  else  # Si no fue posible obtener el archivo .zp...
-    echo -e "\e[31m[!] No fue posible obtener el archivo ${filename}\e[0m"
+  else
+    echo -e "\e[31m[!] Couldn't download the $filename file\e[0m"
     return 1
   fi
 }
