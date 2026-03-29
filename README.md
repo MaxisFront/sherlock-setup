@@ -42,5 +42,5 @@ sherlock-setup <MachineName> <ZIP-URL> [PASSWORD]
 Example:
 
 ```ruby
-sherlock-setup Brutus "https://labs.hackthebox.com/api/v4/challenges/631/cdn/redirect?auth_user_id=49439534&expires=32482394234&signature=34e1fe0df943534cad3936803ea609ba345345e4ac99ffc5dbf34534541fbe2f"
+sherlock-setup Brutus "https://labs.hackthebox.com/api/v4/challenges/631/cdn/redirect?auth_user_&signature=34e1fe0df943534cad3936803ea609ba345345e4ac99ffc5dbf34534541fbe2f"
 ```
