@@ -21,7 +21,7 @@ This is an automation tool for HTB Sherlock challenges. Sets up the directory en
 The script can be executed like a **_standalone binary_** or you can add it to your `~/.bashrc` or `~/.zshrc` config file.
 
 ## Installation
-You can download and execute it with the following commands:
+You can download and make it executable it with the following commands:
 
 ```ruby
 wget "https://raw.githubusercontent.com/MaxisFront/sherlock-setup/refs/heads/main/sherlock-setup.sh"
